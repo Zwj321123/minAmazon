@@ -1,0 +1,13 @@
+Danger log
+
+1. We use TCP sockets to communicate between the front-end and back-end.
+When a new purchase request is created, the frontend will first store the package in the database and then notify the backend by sending the ID of the associated package.
+When the status of a package is updated, the backend will notify the frontend by sending the new status and the ID of the associated package.
+
+2. We used multi-threads for different communication purpose,
+one thread initializing the warehouses and handling requests from the frontend. Upon receiving a package is created from the frontend, a new thread is created to handle the communications with world and UPS for that package.
+
+3.  The user cannot check out and view her package lists without logging in.
+To comply with this requirement, the "@login_required" keyword has been added to the relevant functions in views.py, and other model-related bugs have been fixed.
+
+4. The database only contains empty tables when the program starts (in docker or in new environment), so no items will be listed on the webpage. To fix the problem, we wrote a bash script to create a default users, categories, items and warehouses and make migrations when docker starts.

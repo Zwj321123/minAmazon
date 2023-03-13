@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+{% for obj in object_list %}
+    <div class="col-auto mb-3">
+        <div class="card" style="width: 18rem;">
+          <img class="card-img-top" src="{{ obj.img.url }}" height="200" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">{{obj.categoryName}}</h5>
+            <p class="card-text">Hey! Check out our great {{obj.categoryName}}!</p>
+          </div>
+          <div class="card-body">
+            <a href="{{ obj.get_absolute_url }}" class="btn btn-primary">See more</a>
+          </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

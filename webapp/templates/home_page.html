@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block base_head %}
+<link rel="stylesheet" type="text/css" href='{% static "css/main.css" %}'>
+{% endblock %}
+
+{% block content %}
+<div class='text-center'>
+    <title>Welcome to MiniAmazon</title>
+    <h1>{{title}}</h1>
+  </div>
+    <div class='row'>
+      <div class='col'>
+        <img src="{% static 'img/welcome.png' %}" class="rounded mx-auto d-block" width="800"/>
+        <p>{{content}}</p>
+      </div>
+  </div>
+  {% if request.user.is_authenticated %}
+  <div class="row">
+    <div class="col">
+      <h1>Premium</h1>
+      {{premium_content}}
+    </div>
+  </div>
+  {% endif %}
+
+{% endblock %}

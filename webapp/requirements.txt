@@ -1,0 +1,6 @@
+asgiref==3.4.1
+Django==4.0.4
+django-crispy-forms
+Pillow==8.1.1
+psycopg2==2.9.5
+pytz==2019.3

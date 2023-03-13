@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>My Package List</h1>
+{% if package_list.exists %}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Tracking Number</th>
+      <th scope="col">Products</th>
+      <th scope="col">Order time</th>
+      <th scope="col">Address</th>
+      <th scope="col">State</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for package in package_list %}
+      <tr>
+        <th scope="row">{{ package.id }}</th>
+        <td>
+        {% for user_product in user_product_list %}
+          {% if user_product.package.id is package.id %}
+            {{user_product.productID}},
+          {% endif %}
+        {% endfor %}
+        </td>
+        <td>{{ package.timestamp|date:"F d, Y" }}</td>
+        <td>({{ package.dest_x }}, {{ package.dest_y }})</td>
+        <td>{{ package.status }}</td>
+      </tr>
+
+      <tr>
+        <th colspan="4"></th>
+        <td class="col-1 border-top-0">
+                                  <a href="/package/{{ package.id }}/" class="btn btn-outline-info">Detail</a>
+                              </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="lead">Package is empty</p>
+
+{% endif %}
+
+{% endblock %}

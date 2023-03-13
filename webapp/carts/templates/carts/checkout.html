@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!--{{ object.order_id }} &#45;&#45; {{ object.cart }}-->
+
+{% if not billing_profile %}
+    <div class="row">
+        <div class="col-12 col-md-8">
+            <p class="lead">Login</p>
+            {% include 'accounts/snippets/form.html' with form=login_form next_url=request.build_absolute_uri %}
+        </div>
+        <div class="col-12 col-md-2">
+            Continue as Guest
+        </div>
+    </div>
+{% else %}
+
+<h1>Checkout</h1>
+<div class="row">
+    <div class="col-md-5 order-md-2">
+        <form method="POST">{% csrf_token %}
+            <div class="form-group">
+                <label for="inputAddress_x">Address X</label>
+                <input  type="number" min=0 max=150 class="form-control" name="x" id="inputAddress_x" placeholder="x coordinate" required>
+                 <div class="invalid-feedback" style="width: 100%;">
+                                X value is required.
+                            </div>
+              </div>
+              <div class="form-group">
+                <label for="inputAddress_y">Address Y</label>
+                <input  type="number" min=0 max=150 class="form-control" name="y" id="inputAddress_y" placeholder="y coordinate" required>
+                   <div class="invalid-feedback" style="width: 100%;">
+                                Y value is required.
+                            </div>
+              </div>
+
+            <h4 class="mb-3">Payment</h4>
+
+            <div class="d-block my-3">
+                <div class="custom-control custom-radio">
+                    <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked=""
+                           required>
+                    <label class="custom-control-label" for="credit">Credit card</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
+                    <label class="custom-control-label" for="debit">Debit card</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="cc-name">Name on card</label>
+                    <input type="text" class="form-control" id="cc-name" placeholder="" required="" value="ece568">
+                    <small class="text-muted">Full name as displayed on card</small>
+                    <div class="invalid-feedback">
+                        Name on card is required
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="cc-number">Credit card number</label>
+                    <input type="text" class="form-control" id="cc-number" placeholder="" required="" value="12345">
+                    <div class="invalid-feedback">
+                        Credit card number is required
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <label for="cc-expiration">Expiration</label>
+                    <input type="text" class="form-control" id="cc-expiration" placeholder="" required=""
+                           value="08/23">
+                    <div class="invalid-feedback">
+                        Expiration date required
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="cc-cvv">CVV</label>
+                    <input type="text" class="form-control" id="cc-cvv" placeholder="" required="" value="123">
+                    <div class="invalid-feedback">
+                        Security code required
+                    </div>
+                </div>
+            </div>
+            <hr class="mb-4">
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Place order</button>
+
+        </form>
+
+    </div>
+
+    <!-- side bar, show package info -->
+    <div class="col-md-4 order-md-2">
+        <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                        <h6 class="my-0">Price</h6>
+                    </div>
+                    <span class="text-muted">&dollar;</span>
+                </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Cart Total (USD)</span>
+                <strong>&dollar; {{ object.cart.total}}</strong>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Shipping Total (USD)</span>
+                <strong>&dollar; {{ object.shipping_total }}</strong>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Order Total (USD)</span>
+                <strong>&dollar; {{ object.total}}</strong>
+            </li>
+        </ul>
+    </div>
+</div>
+
+{% endif %}
+
+{% endblock %}

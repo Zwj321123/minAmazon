@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Package Detail</h1>
+{% if object_list.exists %}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Tracking Number: {{ package_id }}</th>
+        <th scope="col">Product title</th>
+        <th scope="col">Description</th>
+        <th scope="col">Qty</th>
+        <th scope="col">State</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user_product in object_list %}
+      <tr>
+        <td class="col-3 text-center">
+                            <img class="img-thumbnail" style="width: 120px; height: 120px" src="{{ user_product.productID.img.url }}">
+                        </td>
+<!--        <th scope="row">{{ user_product.productID }}</th>-->
+        <td>{{ user_product.productID.title }}</td>
+        <td>{{ user_product.productID.description }}</td>
+        <td>{{ user_product.count }}</td>
+        <td>{{ status }}</td>
+      </tr>
+    {% endfor %}
+  <tr>
+        <th colspan="4"></th>
+        <td class="col-1 border-top-0">
+                                  <a href="{% url 'amazon:list-package' %}" class="btn btn-primary">Back</a>
+                              </td>
+      </tr>
+  </tbody>
+</table>
+{% else %}
+<p class="lead">Package is empty</p>
+
+{% endif %}
+
+{% endblock %}
